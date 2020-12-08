@@ -1,31 +1,28 @@
 
 <template>
-
-
   <div id="app">
-<router-view></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import HelloWorld from "./components/HelloWorld";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    HelloWorld,
   },
   created() {
     const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products`;
     console.log(process.env.APIPATH, process.env.CUSTOMPATH);
     this.$http.get(api).then((response) => {
-      console.log(response.data)
-    })
-
-  }
-}
+      console.log(response.data);
+    });
+  },
+};
 </script>
 
 <style lang="sass">
-@import "./assets/all";
+@import "./assets/all"
 </style>

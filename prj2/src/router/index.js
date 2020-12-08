@@ -5,6 +5,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import Login from '@/components/pages/login';
 import HelloWorld from '@/components/HelloWorld';
+import Dashboard from '@/components/Dashboard';
+import Product from '@/components/pages/Products';
 
 
 Vue.use(VueRouter);
@@ -14,6 +16,10 @@ export default new VueRouter ({
     linkActiveClass: 'active', //這個就是讓nav的class可以運用active class
     routes: [
         {
+            path: '*',
+            redirect: 'login',
+        },
+        {
             name: 'Login',  //元件呈現的名稱
             path: '/login',  //對應的虛擬路徑
             component: Login,//對應的元件
@@ -22,6 +28,20 @@ export default new VueRouter ({
             name: 'Hellow',
             path: '/',
             component: HelloWorld,
+            meta: { requiresAuth: true },
+        },
+        {
+            name: 'Dashboard',
+            path: '/admin',
+            component: Dashboard,
+            children: [
+                {
+                    path: 'products',
+                    name: 'Product',
+                    component: Product,
+                    meta: { requiresAuth: true },
+                }
+            ]
         }
     ]
 });

@@ -17,4 +17,24 @@ new Vue({
   components: { App },
   template: '<App/>',
   router,
-})
+});
+
+router.beforeEach((to, from, next) => {
+  console.log(to, from, next);
+  if(to.meta.requiresAuth) {
+    const api = `${process.env.APIPATH}/api/user/check`;
+      const vm = this;
+      axios.post(api).then((response) => {
+        console.log(response.data);
+        if(response.data.success){
+            next();
+        }else {
+          next({
+            path: '/login',
+          })
+        }
+      });
+  } else {
+    next();
+  }
+});
