@@ -52,7 +52,11 @@ export default {
       this.$http.post(api, vm.user).then((response) => {
         console.log(response.data);
         if(response.data.success){
-            vm.$router.push('/admin/products')
+          const token = response.data.token;
+          const expired = response.data.expired;
+          console.log(token, expired);
+          document.cookie = `hexToken=${token}; expires=${ new Date(expired)}`;
+          vm.$router.push('/admin/products')
         }
       });
     },
@@ -70,7 +74,7 @@ body {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
-  align-items: center;
+  align-items: center;  
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #f5f5f5;

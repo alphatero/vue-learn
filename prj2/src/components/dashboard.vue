@@ -19,6 +19,11 @@ export default {
   components: {
     Sidebar,
     Navbar,
-  }
+  },
+  created() {
+    const myCookie = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=s*([^;]*).*$)|^.*$/, '$1');
+    //console.log('mycookie',myCookie);
+    this.$http.defaults.headers.common.Authorization= myCookie;
+  },
 }
 </script>
