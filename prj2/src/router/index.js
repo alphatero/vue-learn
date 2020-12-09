@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import Login from '@/components/pages/login';
-import HelloWorld from '@/components/HelloWorld';
 import Dashboard from '@/components/Dashboard';
 import Product from '@/components/pages/Products';
 
@@ -23,12 +22,6 @@ export default new VueRouter ({
             name: 'Login',  //元件呈現的名稱
             path: '/login',  //對應的虛擬路徑
             component: Login,//對應的元件
-        },
-        {
-            name: 'Hellow',
-            path: '/',
-            component: HelloWorld,
-            meta: { requiresAuth: true },
         },
         {
             name: 'Dashboard',
