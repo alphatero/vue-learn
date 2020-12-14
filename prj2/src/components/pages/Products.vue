@@ -30,6 +30,7 @@
           </td>
           <td>
             <button class="btn btn-outline-primary btn-sm" @click="openModal(false, item)">編輯</button>
+            <button class="btn btn-outline-danger btn-sm" @click="openDeleteModal(item)">刪除</button>
           </td>
         </tr>
       </tbody>
@@ -186,6 +187,7 @@
         </div>
       </div>
     </div>
+    <!--Modal delet-->
     <div
       class="modal fade"
       id="delProductModal"
@@ -213,7 +215,7 @@
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
               取消
             </button>
-            <button type="button" class="btn btn-danger">確認刪除</button>
+            <button type="button" class="btn btn-danger" @click="deleteProduct">確認刪除</button>
           </div>
         </div>
       </div>
@@ -250,6 +252,20 @@ export default {
         this.isNew = false;
       }
       $("#productModal").modal("show");
+    },
+    openDeleteModal(item) {
+      const vm = this;
+      $('#delProductModal').modal("show");
+      vm.tempProduct = Object.assign({}, item);
+    },
+    deleteProduct(){
+      const vm = this;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
+      this.$http.delete(api).then((response) =>{
+        console.log(response, vm.tempProduct);
+        $("#delProductModal").modal("hide");
+        this.getProducts();
+      })
     },
     updateProduct() {
       let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product`;
