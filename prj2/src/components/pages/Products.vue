@@ -293,6 +293,8 @@ export default {
         if(response.data.success) {
           //vm.tempProduct.imageUrl = response.data;
           vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl);
+        }else {
+          this.$bus.$emit('message:push', response.data.message, 'danger')
         }
       });
     },
@@ -321,6 +323,7 @@ export default {
   },
   created() {
     this.getProducts();
+    
   },
 };
 </script>
