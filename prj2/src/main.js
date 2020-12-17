@@ -10,11 +10,13 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import App from './App';
 import router from './router';
 import './bus';
+import currencyFilter from './filters/currency';
 
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 axios.defaults.withCredentials = true;
 Vue.component('Loading', Loading);
+Vue.filter('currency', currencyFilter);
 
 
 /* eslint-disable no-new */
