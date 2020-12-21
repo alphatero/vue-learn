@@ -8,7 +8,7 @@ import Dashboard from '@/components/Dashboard';
 import Product from '@/components/pages/Products';
 import Orders from '@/components/pages/Orders';
 import Coupons from '@/components/pages/Coupons'
-// import CustomerOrders from '@/components/pages/CustomerOrders'
+import CustomerOrders from '@/components/pages/customerOrder'
 
 
 Vue.use(VueRouter);
@@ -50,6 +50,18 @@ export default new VueRouter ({
                     meta: { requiresAuth: true },
                 },
             ]
-        },       
+        },  
+        {
+            path: '/',
+            name: 'Dashboard',
+            component: Dashboard,
+            children: [
+              {
+                path: 'customer_order',
+                name: 'CustomerOrder',
+                component: CustomerOrders,
+              },
+            ],
+          },     
     ]
 });
