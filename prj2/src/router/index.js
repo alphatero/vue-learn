@@ -5,10 +5,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import Login from '@/components/pages/login';
 import Dashboard from '@/components/Dashboard';
-import Product from '@/components/pages/Products';
+import Products from '@/components/pages/Products';
 import Orders from '@/components/pages/Orders';
 import Coupons from '@/components/pages/Coupons'
-import CustomerOrders from '@/components/pages/customerOrder'
+import CustomerOrders from '@/components/pages/customerOrders'
 
 
 Vue.use(VueRouter);
@@ -34,8 +34,8 @@ export default new VueRouter ({
             children: [
                 {
                     path: 'products',
-                    name: 'Product',
-                    component: Product,
+                    name: 'Products',
+                    component: Products,
                 },
                 {
                     path: 'orders',
@@ -58,7 +58,7 @@ export default new VueRouter ({
             children: [
               {
                 path: 'customer_order',
-                name: 'CustomerOrder',
+                name: 'CustomerOrders',
                 component: CustomerOrders,
               },
             ],
