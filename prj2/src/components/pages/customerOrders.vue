@@ -57,7 +57,7 @@
             </div>
             <select name="" class="form-control mt-3" v-model="product.num">
               <option :value="num" v-for="num in 10" :key="num">
-                選購 {{num}} {{product.unit}}
+                選購 {{num}} {{product.unit}} 
               </option>
             </select>
           </div>
@@ -104,10 +104,24 @@ export default {
     getProduct(id) {
       const vm = this;
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${id}`;
-      vm.status.loadingItem = true;
+      vm.status.loadingItem = id;
       this.$http.get(url).then((response) => {
         vm.product = response.data.product;
         $('#productModal').modal('show');
+        console.log(response);
+        vm.isLoading = false;
+        vm.status.loadingItem = '';
+      });
+    },
+    addtoCart(id, qty = 1) {
+      const vm = this;
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      vm.status.loadingItem = id;
+      const cart = {
+        product_id: id,
+        qty,
+      }
+      this.$http.post(url, {data: cart}).then((response) => {
         console.log(response);
         vm.isLoading = false;
         vm.status.loadingItem = '';
