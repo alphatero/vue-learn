@@ -5,7 +5,11 @@
       <div class="col-md-4 mb-4" v-for="item in products" :key="item.id">
         <div class="card border-0 shadow-sm">
           <div
-            style="height: 150px; background-size: cover; background-position: center"
+            style="
+              height: 150px;
+              background-size: cover;
+              background-position: center;
+            "
             :style="{ backgroundImage: `url(${item.imageUrl})` }"
           ></div>
           <div class="card-body">
@@ -17,9 +21,15 @@
             </h5>
             <p class="card-text">{{ item.content }}</p>
             <div class="d-flex justify-content-between align-items-baseline">
-              <div class="h5" v-if="!item.price">{{ item.origin_price }} 元</div>
-              <del class="h6" v-if="item.price">原價 {{ item.origin_price }} 元</del>
-              <div class="h5" v-if="item.price">現在只要 {{ item.price }} 元</div>
+              <div class="h5" v-if="!item.price">
+                {{ item.origin_price }} 元
+              </div>
+              <del class="h6" v-if="item.price"
+                >原價 {{ item.origin_price }} 元</del
+              >
+              <div class="h5" v-if="item.price">
+                現在只要 {{ item.price }} 元
+              </div>
             </div>
           </div>
           <div class="card-footer d-flex">
@@ -28,7 +38,10 @@
               class="btn btn-outline-secondary btn-sm"
               @click="getProduct(item.id)"
             >
-              <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
+              <i
+                class="fas fa-spinner fa-spin"
+                v-if="status.loadingItem === item.id"
+              ></i>
               查看更多
             </button>
             <button
@@ -36,7 +49,10 @@
               class="btn btn-outline-danger btn-sm ml-auto"
               @click="addtoCart(item.id)"
             >
-              <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
+              <i
+                class="fas fa-spinner fa-spin"
+                v-if="status.loadingItem === item.id"
+              ></i>
               加到購物車
             </button>
           </div>
@@ -54,8 +70,15 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">{{ product.title }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="exampleModalLabel">
+              {{ product.title }}
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -68,11 +91,15 @@
               </footer>
             </blockquote>
             <div class="d-flex justify-content-between align-items-baseline">
-              <div class="h4" v-if="!product.price">{{ product.origin_price }} 元</div>
+              <div class="h4" v-if="!product.price">
+                {{ product.origin_price }} 元
+              </div>
               <del class="h6" v-if="product.price"
                 >原價 {{ product.origin_price }} 元</del
               >
-              <div class="h4" v-if="product.price">現在只要 {{ product.price }} 元</div>
+              <div class="h4" v-if="product.price">
+                現在只要 {{ product.price }} 元
+              </div>
             </div>
             <select name="" class="form-control mt-3" v-model="product.num">
               <option :value="num" v-for="num in 10" :key="num">
@@ -99,8 +126,9 @@
         </div>
       </div>
     </div>
-        <div class="my-5 row justify-content-center">
-      <div class="my-5 row justify-content-center">
+
+    <div class="my-5 row justify-content-center">
+      <div class="col-md-6">
         <table class="table">
           <thead>
             <th></th>
@@ -109,20 +137,23 @@
             <th>單價</th>
           </thead>
           <tbody>
-            <tr v-for="item in cart.carts" :key="item.id" >
+            <tr v-for="item in cart.carts" :key="item.id">
               <td class="align-middle" v-if="cart.carts">
-                <button type="button" class="btn btn-outline-danger btn-sm"
-                @click="removeCartItem(item.id)">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm"
+                  @click="removeCartItem(item.id)"
+                >
                   <i class="far fa-trash-alt"></i>
                 </button>
               </td>
               <td class="align-middle">
                 {{ item.product.title }}
-                <div class="text-success" v-if="item.coupon">
-                  已套用優惠券
-                </div>
+                <div class="text-success" v-if="item.coupon">已套用優惠券</div>
               </td>
-              <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
+              <td class="align-middle">
+                {{ item.qty }}/{{ item.product.unit }}
+              </td>
               <td class="align-middle text-right">{{ item.final_total }}</td>
             </tr>
           </tbody>
@@ -137,15 +168,118 @@
             </tr>
           </tfoot>
         </table>
-                <div class="input-group mb-3 input-group-sm">
-          <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
+        <div class="input-group mb-3 input-group-sm">
+          <input
+            type="text"
+            class="form-control"
+            v-model="coupon_code"
+            placeholder="請輸入優惠碼"
+          />
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" @click="addCouponCode">
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              @click="addCouponCode"
+            >
               套用優惠碼
             </button>
           </div>
         </div>
       </div>
+    </div>
+    <div class="my-5 row justify-content-center">
+      <validation-observer class="col-md-6" v-slot="{ invalid }">
+        <form @submit.prevent="createOrder">
+          <validation-provider
+            class="form-group"
+            rules="required|email"
+            v-slot="{ errors, classes }"
+          >
+            <div class="form-group">
+              <!-- 輸入框 -->
+              <label for="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                v-model="form.user.email"
+                class="form-control"
+                :class="classes"
+              />
+              <!-- 錯誤訊息 -->
+              <span class="invalid-feedback">{{ errors[0] }}</span>
+            </div>
+          </validation-provider>
+          <validation-provider
+            class="form-group"
+            rules="required"
+            v-slot="{ errors, classes }"
+          >
+            <div class="form-group">
+              <!-- 輸入框 -->
+              <label for="username">收件人姓名</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="username"
+                v-model="form.user.name"
+                placeholder="輸入姓名"
+                :class="classes"
+              />
+              <!-- 錯誤訊息 -->
+              <span class="invalid-feedback">{{ errors[0] }}</span>
+            </div>
+          </validation-provider>
+          <validation-provider
+            class="form-group"
+            rules="required|number"
+            v-slot="{ classes }"
+          >
+            <div class="form-group">
+              <!-- 輸入框 -->
+            <label for="usertel">收件人電話</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="usertel"
+              v-model="form.user.tel"
+              placeholder="請輸入電話"
+                :class="classes"
+              />
+              <!-- 錯誤訊息 -->
+              <span class="invalid-feedback">something wrong</span>
+            </div>
+          </validation-provider>
+          <!-- <div class="form-group">
+            <label for="useraddress">收件人地址</label>
+            <input
+              type="text"
+              class="form-control"
+              name="address"
+              id="useraddress"
+              v-model="form.user.address"
+              placeholder="請輸入地址"
+            />
+            <span class="text-danger">地址欄位不得留空</span>
+          </div>
+
+          <div class="form-group">
+            <label for="comment">留言</label>
+            <textarea
+              name=""
+              id="comment"
+              class="form-control"
+              cols="30"
+              rows="10"
+              v-model="form.message"
+            ></textarea>
+          </div> -->
+          <div class="text-right">
+            <button class="btn btn-danger" :disabled="invalid">送出訂單</button>
+          </div>
+        </form>
+      </validation-observer>
     </div>
   </div>
 </template>
@@ -160,9 +294,18 @@ export default {
       status: {
         loadingItem: "",
       },
+      form: {
+        user: {
+          name: "",
+          email: "",
+          tel: "",
+          address: "",
+        },
+        message: "",
+      },
       isLoading: false,
       cart: {},
-      coupon_code:'',
+      coupon_code: "",
     };
   },
   methods: {
@@ -215,7 +358,7 @@ export default {
         vm.isLoading = false;
       });
     },
-    removeCartItem(id){
+    removeCartItem(id) {
       const vm = this;
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
       vm.isLoading = true;
@@ -227,19 +370,29 @@ export default {
         vm.isLoading = false;
       });
     },
-    addCouponCode(){
+    addCouponCode() {
       const vm = this;
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
       const coupon = {
         code: vm.coupon_code,
-      }
+      };
       vm.isLoading = true;
-      this.$http.post(url, {data: coupon}).then((response) => {
+      this.$http.post(url, { data: coupon }).then((response) => {
         console.log(response);
         vm.getCart();
         vm.isLoading = false;
       });
-    }
+    },
+    createOrder() {
+      const vm = this;
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
+      const coupon = vm.form;
+      vm.isLoading = true;
+      this.$http.post(url, { data: coupon }).then((response) => {
+        console.log("訂單已成立", response);
+        vm.isLoading = false;
+      });
+    },
   },
   created() {
     this.getProducts();
