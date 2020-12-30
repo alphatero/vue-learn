@@ -233,48 +233,57 @@
           </validation-provider>
           <validation-provider
             class="form-group"
-            rules="required|number"
-            v-slot="{ classes }"
+            rules="required|numeric|min:8"
+            v-slot="{ errors, classes }"
           >
             <div class="form-group">
               <!-- 輸入框 -->
-            <label for="usertel">收件人電話</label>
+              <label for="usertel">收件人電話</label>
               <input
                 type="tel"
                 class="form-control"
                 id="usertel"
-              v-model="form.user.tel"
-              placeholder="請輸入電話"
+                v-model="form.user.tel"
+                placeholder="請輸入電話"
                 :class="classes"
               />
               <!-- 錯誤訊息 -->
-              <span class="invalid-feedback">something wrong</span>
+              <span class="invalid-feedback">{{ errors[0] }}</span>
             </div>
           </validation-provider>
-          <!-- <div class="form-group">
-            <label for="useraddress">收件人地址</label>
-            <input
-              type="text"
-              class="form-control"
-              name="address"
-              id="useraddress"
-              v-model="form.user.address"
-              placeholder="請輸入地址"
-            />
-            <span class="text-danger">地址欄位不得留空</span>
-          </div>
-
-          <div class="form-group">
-            <label for="comment">留言</label>
-            <textarea
-              name=""
-              id="comment"
-              class="form-control"
-              cols="30"
-              rows="10"
-              v-model="form.message"
-            ></textarea>
-          </div> -->
+          <validation-provider
+            class="form-group"
+            rules="required|min:8"
+            v-slot="{ errors, classes }"
+          >
+            <div class="form-group">
+              <label for="useraddress">收件人地址</label>
+              <input
+                type="text"
+                class="form-control"
+                name="address"
+                id="useraddress"
+                v-model="form.user.address"
+                placeholder="請輸入地址"
+                :class="classes"
+              />
+              <!-- 錯誤訊息 -->
+              <span class="invalid-feedback">{{ errors[0] }}</span>
+            </div>
+          </validation-provider>
+          <validation-provider class="form-group" rules="">
+            <div class="form-group">
+              <label for="comment">留言</label>
+              <textarea
+                name=""
+                id="comment"
+                class="form-control"
+                cols="30"
+                rows="10"
+                v-model="form.message"
+              ></textarea>
+            </div>
+          </validation-provider>
           <div class="text-right">
             <button class="btn btn-danger" :disabled="invalid">送出訂單</button>
           </div>

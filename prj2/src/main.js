@@ -7,7 +7,9 @@ import 'bootstrap';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import { ValidationObserver, ValidationProvider, extend, localize, configure } from 'vee-validate';
-import TW from 'vee-validate/dist/locale/zh_TW.json'
+import TW from 'vee-validate/dist/locale/zh_TW.json';
+import en from 'vee-validate/dist/locale/en.json';
+localize(en,TW)
 import * as rules from 'vee-validate/dist/rules';
 
 
