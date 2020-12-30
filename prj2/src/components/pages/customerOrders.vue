@@ -191,7 +191,6 @@
       <validation-observer class="col-md-6" v-slot="{ invalid }">
         <form @submit.prevent="createOrder">
           <validation-provider
-            class="form-group"
             rules="required|email"
             v-slot="{ errors, classes }"
           >
@@ -210,11 +209,7 @@
               <span class="invalid-feedback">{{ errors[0] }}</span>
             </div>
           </validation-provider>
-          <validation-provider
-            class="form-group"
-            rules="required"
-            v-slot="{ errors, classes }"
-          >
+          <validation-provider rules="required" v-slot="{ errors, classes }">
             <div class="form-group">
               <!-- 輸入框 -->
               <label for="username">收件人姓名</label>
@@ -232,7 +227,6 @@
             </div>
           </validation-provider>
           <validation-provider
-            class="form-group"
             rules="required|numeric|min:8"
             v-slot="{ errors, classes }"
           >
@@ -252,7 +246,6 @@
             </div>
           </validation-provider>
           <validation-provider
-            class="form-group"
             rules="required|min:8"
             v-slot="{ errors, classes }"
           >
@@ -271,7 +264,7 @@
               <span class="invalid-feedback">{{ errors[0] }}</span>
             </div>
           </validation-provider>
-          <validation-provider class="form-group" rules="">
+          <validation-provider rules="">
             <div class="form-group">
               <label for="comment">留言</label>
               <textarea
@@ -395,10 +388,13 @@ export default {
     createOrder() {
       const vm = this;
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
-      const coupon = vm.form;
+      const order = vm.form;
       vm.isLoading = true;
-      this.$http.post(url, { data: coupon }).then((response) => {
+      this.$http.post(url, { data: order }).then((response) => {
         console.log("訂單已成立", response);
+        if (response.data.success) {
+          vm.$router.push(`/customer_checkout/${response.data.orderId}`);
+        }
         vm.isLoading = false;
       });
     },
