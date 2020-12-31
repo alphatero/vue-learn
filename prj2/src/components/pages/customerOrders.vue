@@ -394,7 +394,7 @@ export default {
         console.log("訂單已成立", response);
         if (response.data.success) {
           vm.$router.push(`/customer_checkout/${response.data.orderId}`);
-        }
+        };
         vm.isLoading = false;
       });
     },
